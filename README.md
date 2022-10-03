@@ -1,3 +1,19 @@
+
+# 0 Porting to Python 3.10
+
+Main changes done: 
+* Replaces prints
+* Removed a lot of imports
+* A lot of formatting
+* Installed:
+  * matplotlib
+  * termcolor
+  * pyserial
+* Changed all occurrences of `wifi_radio_test` to `nrf_wifi_prod`
+* encode strings for all cntrl_sckt.sendall calls
+* 
+
+NOTE: fixed for minimal requirements, just do `python -m pip install -r requirements.txt` instead of the list under 3#. 
 # 1.	Hardware Required
 
 1. PC: Any Linux/Windows PC
@@ -6,6 +22,7 @@
 4. Co-axial Cables/LAN Cables
 
 # 2.	Test Setup
+
 ![test setup](test_setup.png)
 
 # 3.	Installations
