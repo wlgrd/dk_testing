@@ -1,0 +1,11 @@
+wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+python2 get-pip.py
+python -m pip install xlsxwriter
+python -m pip install numpy
+python -m pip install matplotlib
+python -m pip install paramiko
+python -m pip install serial
+python -m pip install pyserial
+python -m pip install openpyxl
+python -m pip install docx
+python -m pip install python_docx
