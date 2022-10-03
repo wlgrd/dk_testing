@@ -12,89 +12,39 @@ class NRF:
 		
 	#Set Production Mode Settings
 	def set_dut_production_mode_settings(self,standard='',ch='',bw='',stbc='',gi='',coding='',greenfield_mode='',preamble='',test='rx',action=''):
-		print '\nSetting DUT in production mode\n'
+		# print'\nSetting DUT in production mode\n'
 		debugPrint('\nSetting DUT in production mode\n')
 		self.dut_write('wifi_radio_test tx 0')
 		self.dut_write('wifi_radio_test rx 0')
 		self.dut_write('wifi_radio_test tx_pkt_rate -1')
 		self.dut_write('wifi_radio_test tx_pkt_mcs -1')
 		self.dut_write('wifi_radio_test tx_pkt_tput_mode 0')
-		self.dut_write('wifi_radio_test rf_params 0000000000002C00000000000000006060606060606060600000000050EC000000000000000000000000')
-		self.set_dut_xo()
+		# self.dut_write('wifi_radio_test rf_params 0000000000002C00000000000000006060606060606060600000000050EC000000000000000000000000')
+		self.set_rf_params()
 		self.dut_write('wifi_radio_test phy_calib_rxdc 1')
 		self.dut_write('wifi_radio_test phy_calib_txdc 1')
 		self.dut_write('wifi_radio_test phy_calib_txpow 1')
 		self.dut_write('wifi_radio_test phy_calib_rxiq 1')
 		self.dut_write('wifi_radio_test phy_calib_txiq 1')
 		# self.dut_write('wifi_radio_test phy_calib_dpd 1')
-		if('rx' in test):
-			if((standard=='11n')or(standard=='11ac')):
-				if(bw=='40') or (bw=='20in40'):
-					self.dut_write('wifi_radio_test chnl_bw 1')
-					if str(ch) in prime_20_sec_20_flags_dict[bw].keys():
-						self.dut_write('wifi_radio_test chnl_sec_20_offset 1')
-					else:
-						self.dut_write('wifi_radio_test chnl_sec_20_offset -1')
-				elif(bw=='80') or (bw=='20in80'):
-					self.dut_write('wifi_radio_test chnl_bw 2')
-					if(prime_20_sec_20_flags_dict[bw][ch]=='l'):
-						self.dut_write('wifi_radio_test chnl_sec_20_offset -1')
-						self.dut_write('wifi_radio_test chnl_sec_40_offset -1')
-					elif(prime_20_sec_20_flags_dict[bw][ch]=='lr'):
-						self.dut_write('wifi_radio_test chnl_sec_20_offset -1')
-						self.dut_write('wifi_radio_test chnl_sec_40_offset 1')
-					elif(prime_20_sec_20_flags_dict[bw][ch]=='rl'):
-						self.dut_write('wifi_radio_test chnl_sec_20_offset 1')
-						self.dut_write('wifi_radio_test chnl_sec_40_offset -1')
-					elif(prime_20_sec_20_flags_dict[bw][ch]=='r'):
-						self.dut_write('wifi_radio_test chnl_sec_20_offset 1')
-						self.dut_write('wifi_radio_test chnl_sec_40_offset 1')
-				# time.sleep(0.5)
-		elif('tx' in test):
+		if('tx' in test):
 			if((standard=='11n')or(standard=='11ac')):
 				self.dut_write('wifi_radio_test tx_pkt_len 4096 ')
-				# time.sleep(0.5)
-				if(bw=='40') or (bw=='20in40'):
-					self.dut_write('wifi_radio_test tx_pkt_chnl_bw 1')
-					self.dut_write('wifi_radio_test chnl_bw 1')
-					if str(ch) in prime_20_sec_20_flags_dict[bw].keys():
-						self.dut_write('wifi_radio_test chnl_sec_20_offset 1')
-					else:
-						self.dut_write('wifi_radio_test chnl_sec_20_offset -1')
-				elif(bw=='80') or (bw=='20in80'):
-					self.dut_write('wifi_radio_test tx_pkt_chnl_bw 2')
-					self.dut_write('wifi_radio_test chnl_bw 2')
-					if(prime_20_sec_20_flags_dict[bw][ch]=='l'):
-						self.dut_write('wifi_radio_test chnl_sec_20_offset -1')
-						self.dut_write('wifi_radio_test chnl_sec_40_offset -1')
-					elif(prime_20_sec_20_flags_dict[bw][ch]=='lr'):
-						self.dut_write('wifi_radio_test chnl_sec_20_offset -1')
-						self.dut_write('wifi_radio_test chnl_sec_40_offset 1')
-					elif(prime_20_sec_20_flags_dict[bw][ch]=='rl'):
-						self.dut_write('wifi_radio_test chnl_sec_20_offset 1')
-						self.dut_write('wifi_radio_test chnl_sec_40_offset -1')
-					elif(prime_20_sec_20_flags_dict[bw][ch]=='r'):
-						self.dut_write('wifi_radio_test chnl_sec_20_offset 1;')
-						self.dut_write('wifi_radio_test chnl_sec_40_offset 1')
-				# time.sleep(0.5)
-			if((standard=='11a')or(standard=='11b')or(standard=='11g')):
+			elif((standard=='11a')or(standard=='11b')or(standard=='11g')):
 				self.dut_write('wifi_radio_test tx_pkt_len 1024')
-				# time.sleep(0.5)
-			if(standard=='11b'):
+			elif(standard=='11b'):
 				self.dut_write('wifi_radio_test tx_pkt_len 1024')
-				# time.sleep(0.5)	
 				if(preamble.lower()=='short'):
 					self.dut_write('wifi_radio_test tx_pkt_preamble 0')#SHORT
 				elif(preamble.lower()=='long'):
 					self.dut_write('wifi_radio_test tx_pkt_preamble 1')#LONG
-				# time.sleep(0.5)	
-
+		
 	#SET IBSS Mode
 	def set_dut_ibss(self,standard='11ac',channel='144',bw='20',streams='2x2',wait='yes'):
 		return
 	
 	def set_dut_channel(self,ch):
-		print 'Setting DUT in Channel -',ch
+		# print'Setting DUT in Channel -',ch
 		debugPrint('Setting DUT in Channel -',ch)
 		self.dut_write('wifi_radio_test tx 0')
 		self.dut_write('wifi_radio_test rx 0')
@@ -244,22 +194,21 @@ class NRF:
 			per_data.append(int(rssi_avg))
 		except:
 			per_data.append('NODATA')
-		if 0 <= per <= 5:   per_status = "PASS"
-		else :  per_status = "FAIL"
-		return per_data,per_status
+
+		return per_data,"PASS"
 
 	def get_stats_path(self):
 		global stats_path
 		stats_path=''
 		
 	def dut_reboot(self):
-		print ('DUT Reboot')
+		# print('DUT Reboot')
 		os.system('nrfjprog -f NRF53 --reset')
 
 	#Setting Datarate
 	def set_dut_datarate(self,data_rate,standard):
 		debugPrint("\nStandard : " + standard)
-		print "\nSetting data rate ",data_rate
+		# print"\nSetting data rate ",data_rate
 		debugPrint("\nSetting data rate " + data_rate)
 		if('MCS' in data_rate):
 			op_str="""p=`cat /sys/kernel/debug/img/wlan/conf | grep tx_pkt_rate | cut -f2 -d'='`
@@ -303,19 +252,33 @@ class NRF:
 		self.dut_write('wifi_radio_test tx 1')
 		# time.sleep(1)
 
-	#Setting TXPower
-	def set_dut_xo(self,xo='2c'):
-		fopen = open('xo_val_board_'+board_num+'.txt', 'r')
-		xo=fopen.read()
-		fopen.close()
-		if xo =="": xo = "2c"
+	#Setting RF Params 
+	def set_rf_params(self, xo = "2C"):
+		if os.path.exists('xo_val_board_'+board_num+'.txt'):
+			fopen = open('xo_val_board_'+board_num+'.txt', 'r')
+			xo=fopen.read()
+			fopen.close()
+			if xo == "":
+				xo = "2C"
+		self.dut_write('wifi_radio_test rf_params 000000000000'+xo+'00000000000000006060606060606060600000000050EC000000000000000000000000')
+
+	#Setting XO 
+	def set_dut_xo(self,xo='2C'):
+		if os.path.exists('xo_val_board_'+board_num+'.txt'):
+			fopen = open('xo_val_board_'+board_num+'.txt', 'r')
+			xo=fopen.read()
+			fopen.close()
+			if xo == "":
+				xo = xo
+		# print ("\nSetting XO "+str(xo))
 		debugPrint("\nSetting XO "+str(xo))
 		self.dut_write('wifi_radio_test tx 0')
-		# time.sleep(1)
-		self.dut_write('wifi_radio_test rf_params 000000000000'+str(xo)+'00000000000000006060606060606060600000000050EC000000000000000000000000')
-		# time.sleep(1)
+		time.sleep(0.5)
+		# self.dut_write('wifi_radio_test rf_params 00000000000000000000000000006060606060606060600000000050EC000000000000000000000000')
+		self.dut_write('wifi_radio_test rf_params 000000000000'+xo+'00000000000000006060606060606060600000000050EC000000000000000000000000')
+		time.sleep(0.5)
 		self.dut_write('wifi_radio_test tx 1')
-		# time.sleep(1)
+		time.sleep(0.5)
 
 	#Start/Kill pktgen
 	def pktgen_tool(self,status):
@@ -349,7 +312,7 @@ class NRF:
 		return rfconf_string
 
 	def set_production_calib_txpower(self,txp):
-		print "\nSetting TX Power ",txp
+		# print"\nSetting TX Power ",txp
 		debugPrint("\nSetting TX Power "+str(txp))
 		self.dut_write('wifi_radio_test set_tx_power '+txp)
 
@@ -430,7 +393,7 @@ class NRF:
 		debugPrint('SSH Access to '+dut_mgmt_ip)
 		global dut_obj
 		if(1):			
-			os.system('taskkill /F /im ttermpro.exe;killall -9 minicom')
+			# os.system('taskkill /F /im ttermpro.exe;killall -9 minicom')
 			dut_obj=serial.Serial(self.com_port,'115200',parity=serial.PARITY_NONE,bytesize=serial.EIGHTBITS,timeout=4)
 			return 'SUCCESS'
 		# except Exception,e:
@@ -478,65 +441,23 @@ class NRF:
 		global chain_sel_cmd
 		chain_sel_cmd=chain_sel
 		debugPrint('Init DUT')
-		status=self.dut_access(dut_mgmt_ip, dut_username, dut_password )
+		status=self.dut_access()
 		debugPrint(status)
-		print status
+		# printstatus
 		if(status=='AUTH_FAIL' or status=='CONNECT_FAIL'):
-			status=self.dut_access(dut_mgmt_ip, dut_username, dut_password )
+			status=self.dut_access()
 			if(status=='AUTH_FAIL' or status=='CONNECT_FAIL'):
 				debugPrint('Script Execution stopped as SSH to DUT failed after reboot')
 				print 'Script Execution stopped as SSH to DUT failed after reboot'
 				exit(0)
-		self.get_stats_path()
-		status=self.load_release_files()
-		self.set_dut_streams(streams=streams)
-		self.set_dut_production_mode_settings(standard=standard,ch=channel,bw=bw,stbc=stbc,gi=gi,coding=coding,greenfield_mode=greenfield_mode,preamble=preamble,test=test,action='only_enable')
-		res=self.set_dut_channel(channel)
-		if('FAIL' in res):
-			if(self.check_dut_stuck_state()=='alive'):
-				self.dut_reboot()
-			else:
-				print 'DUT is stuck'
-			time.sleep(reboot_time)
-			status=self.dut_access(dut_mgmt_ip, dut_username, dut_password )
-			if(status=='AUTH_FAIL' or status=='CONNECT_FAIL'):
-				time.sleep(60)
-				status=self.dut_access(dut_mgmt_ip, dut_username, dut_password )
-			if(status=='AUTH_FAIL' or status=='CONNECT_FAIL'):
-				debugPrint('Script Execution stopped as SSH to DUT failed after reboot')
-				print 'Script Execution stopped as SSH to DUT failed after reboot'
-				exit(0)
-			res=self.dut_write('\n')
-			res=self.dut_write_read('cat /proc/iomem  | grep 02c') # 
-			res=self.dut_write_read('lspci | grep 8000')  # Detect the img wlan borah board pci
-			res=self.dut_write_read('ls -l /lib/firmware/img/wlan')
-			self.dut_write('rmmod img_wlan_fmac_prod')
-			time.sleep(2)
-			self.dut_write('modprobe cfg80211')
-			self.dut_write('rfkill unblock all')
-			time.sleep(2)
-			self.dut_write('insmod /lib/firmware/img/wlan/img_wlan_fmac_prod.ko')
-			time.sleep(5)
-			res_load=self.dut_write_read('iw dev|grep Interface')
-			print 'While Reloading',res_load
-			if('Interface' in res_load):
-				m=re.compile('Interface (.*)')
-				wlan_interface=m.findall(res_load)[0]
-				print wlan_interface
-				res=self.dut_write('killall -9 wpa_supplicant')
-				time.sleep(3)
-			self.dut_write('rfkill unblock all')
-			time.sleep(2)
-			res=self.dut_write_read('\n')
-			if('RPU_WIFI_HAL' in res) or ('FAIL' in res) or ('FAIL' in res_load):
-				debugPrint('Script Execution stopped as DUT is LOCKING up immediate after reboot')
-				print 'Script Execution stopped as DUT is LOCKING up immediate after reboot'
-				exit(0)
-			
-		self.set_dut_ibss(standard=standard,channel=channel,bw=bw,streams=streams)
-		if('rx' not in test):
-			self.set_dut_rfconf(release)
-		self.dut_down_up(action='up_down',ch=channel)
+		# self.get_stats_path()
+		# status=self.load_release_files()
+		# self.set_dut_streams(streams=streams)
+		# self.set_dut_production_mode_settings(standard=standard,ch=channel,bw=bw,stbc=stbc,gi=gi,coding=coding,greenfield_mode=greenfield_mode,preamble=preamble,test=test,action='only_enable')
+		# # res=self.set_dut_channel(channel)
+		# if('rx' not in test):
+			# self.set_dut_rfconf(release)
+		# self.dut_down_up(action='up_down',ch=channel)
 
 	def dut_close(self):
 		debugPrint('DUT SSH Session Close')

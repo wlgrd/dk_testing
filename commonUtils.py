@@ -492,7 +492,6 @@ def start_per(modulation,dr,ch,streams,standard,tester,dut,equipment,wave_type='
 		print return_data,per_status
 		if(per_status=='FAIL'):
 			return_data[0]='LOCKUP'
-	return "\nStandard\t:\t"+standard+"\nData Rate\t:\t"+dr+"\nMeasured PER%\t:\t"+str(return_data[-2])+"\nPER Stauts\t:\t"+per_status
 	return return_data
 	
 def get_tx_stats_from_vsa(txp,dr,ch,streams,standard,bw,equipment,cable_loss_1x1,cable_loss_2x2):

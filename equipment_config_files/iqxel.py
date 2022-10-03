@@ -26,7 +26,7 @@ class IQXEL:
 		self.port = 24000
 #Start VSG	
 	def start_vsg(self):
-		print "\nConfiguring ",self.tester	
+		# print "\nConfiguring ",self.tester	
 		debugPrint("\nConfiguring "+self.tester)
 		global cntrl_sckt
 		ADDR = (self.hostName,self.port)
@@ -62,7 +62,7 @@ class IQXEL:
 	
 	#Set Default
 	def set_equip_default(self):
-		print "\nSetting VSA to default"
+		# print "\nSetting VSA to default"
 		debugPrint("\nSetting VSA to default")
 		cntrl_sckt.sendall('*RST\n')
 		if(self.tester.lower()=='280'):
@@ -82,20 +82,20 @@ class IQXEL:
 	
 	#Modulation Type
 	def set_modulation(self,standard):
-		print "\nSetting "+standard+" in VSA"
+		# print"\nSetting "+standard+" in VSA"
 		debugPrint("\nSetting "+standard+" in VSA")
 		eval('self.config_'+standard+'()')
 
 		
 	#Setting Datarate
 	def set_datarate(self,modulation,standard,data_rate):
-		print "\nSetting data rate ",data_rate
+		# print"\nSetting data rate ",data_rate
 		debugPrint("\nSetting data rate "+data_rate)
 		cntrl_sckt.sendall('CHAN1;WIFI;CONF:WAVE:'+modulation+':'+datarate_dict[standard][data_rate]+'\n')
 
 	#Setting Payload
 	def set_payload(self,standard,payload):
-		print "\nSetting payload ",payload
+		# print"\nSetting payload ",payload
 		debugPrint("\nSetting payload "+str(payload))
 		cntrl_sckt.sendall('CHAN1;WIFI;CONF:WAVE:PSDU:NBYT '+payload+'\n')
 
@@ -155,14 +155,14 @@ class IQXEL:
 	
 	#Setting Wavegap/Idle Interval
 	def set_idleinterval(self,intv):
-		print "\nSetting interval ",intv
+		# print"\nSetting interval ",intv
 		debugPrint("\nSetting interval "+str(intv))
 		cntrl_sckt.sendall('CHAN1;WIFI;CONF:WAVE:GAP '+str(float(intv)/1000000)+'\n')
 	
 			
 	#Set Spatial Streams
 	def set_streams(self,standard,streams):
-		print "\nSetting streams ",streams
+		# print"\nSetting streams ",streams
 		debugPrint("\nSetting streams "+streams)
 		if(streams=='1x1'):
 			cntrl_sckt.sendall("CHAN1;WIFI;CONF:WAVE:OFDM:NSST 1\n")#1x1		
@@ -172,7 +172,7 @@ class IQXEL:
 
 	#Set Guard Interval
 	def set_guardinterval(self,gi):
-		print "\nSetting Guard Interval ",gi
+		# print"\nSetting Guard Interval ",gi
 		debugPrint("\nSetting Guard Interval "+gi)
 		if(gi.lower()=='sgi'):
 			cntrl_sckt.sendall("CHAN1;WIFI;CONF:WAVE:OFDM:SGI ON\n")#SGI
@@ -181,13 +181,13 @@ class IQXEL:
 
 	#Set STBC
 	def set_stbc(self,stbc):
-		print "\nSetting STBC ",stbc
+		# print"\nSetting STBC ",stbc
 		debugPrint("\nSetting STBC "+stbc)
 		cntrl_sckt.sendall("CHAN1;WIFI;CONF:WAVE:OFDM:STBC "+str(stbc)[-1]+"\n")
 
 	#Set Coding Type
 	def set_coding(self,coding):
-		print "\nSetting Coding Technique ",coding
+		# print"\nSetting Coding Technique ",coding
 		debugPrint("\nSetting Coding Technique "+coding)
 		if(coding.lower()=='ldpc'):
 			cntrl_sckt.sendall("CHAN1;WIFI;CONF:WAVE:OFDM:COD LDPC\n")#LDPC
@@ -196,7 +196,7 @@ class IQXEL:
 
 	#Set Greenfield Mode
 	def set_greenfield(self,greenfield_mode):
-		print "\nSetting Greenfield Mode ",greenfield_mode
+		# print"\nSetting Greenfield Mode ",greenfield_mode
 		debugPrint("\nSetting Greenfield Mode "+greenfield_mode)
 		if(greenfield_mode.lower()=='greenfield'):
 			cntrl_sckt.sendall("CHAN1;WIFI;CONF:WAVE:OFDM:GRE ON\n")#Greenfield
@@ -205,7 +205,7 @@ class IQXEL:
 	
 	#Set Preamble
 	def set_preamble(self,preamble):
-		print "\nSetting preamble ",preamble
+		# print"\nSetting preamble ",preamble
 		debugPrint("\nSetting preamble "+preamble)
 		if(preamble.lower=='short'):
 			cntrl_sckt.sendall("CHAN1;WIFI;CONF:WAVE:DSSS:PRE SHORT\n")#Short
@@ -229,7 +229,7 @@ class IQXEL:
 
 	#Generate Waveform
 	def generate_waveform(self,streams='2x2',count='2000'):
-		print "\nGenerating waveform "
+		# print"\nGenerating waveform "
 		debugPrint("\nGenerating waveform ")
 		# cntrl_sckt.sendall("CHAN1;WIFI\n")
 		# cntrl_sckt.sendall('wave:gen:mmem "\//user/wf.iqvsg", "WIFI wave generation from GUI"\n')
@@ -276,7 +276,7 @@ class IQXEL:
 	def set_rf(self,streams='2x2',test='rx',chain_sel='1'):
 		global chain_sel_scpi_cmd
 		chain_sel_scpi_cmd=""
-		print 'Setting RF Port in ',self.tester
+		# print'Setting RF Port in ',self.tester
 		debugPrint('Setting RF Port in '+self.tester)
 		if(test=='rx'):
 			if(self.tester.lower()=='80'):
@@ -412,14 +412,14 @@ class IQXEL:
 			modulation='dsss'
 		else:
 			modulation='ofdm'
-		print "\nSetting "+modulation+" in VSA"
+		# print "\nSetting "+modulation+" in VSA"
 		cntrl_sckt.sendall("CHAN1;WIFI;CONF:STAN "+modulation.upper()+"\n")
 		if(standard=='11b'):
 			cntrl_sckt.sendall("CHAN1;WIFI;CONF:STAN DSSS\n")
 	
 	#Setting Capture Length
 	def set_capturelength(self,len,streams):
-		print "\nSetting interval ",len
+		# print "\nSetting interval ",len
 		debugPrint("\nSetting interval "+str(len))
 		if(streams=='1x1'):
 			cntrl_sckt.sendall('VSA1'+chain_sel_scpi_cmd+';CAPT:TIME '+str(float(len)/1000)+'\n')
@@ -428,7 +428,7 @@ class IQXEL:
 	
 	#Apply to VSA
 	def apply_vsa(self,chn='',bw='',streams='2x2',chain_sel_scpi_cmd='1'):
-		print "\nApply settings to VSA",chn
+		# print "\nApply settings to VSA",chn
 		debugPrint("\nApply settings to VSA"+str(chn))
 		if(bw=='20'):
 			cntrl_sckt.sendall('CHAN1;WIFI;CONF:CHAN:IND1 '+str(chn)+'\n')
@@ -963,7 +963,7 @@ class IQXEL:
 			modulation='dsss'
 		else:
 			modulation='ofdm'
-		print "\nSetting "+modulation+" in VSA"
+		# print "\nSetting "+modulation+" in VSA"
 		debugPrint("\nSetting "+modulation+" in VSA")
 		cntrl_sckt.sendall("CHAN1;WIFI;CONF:STAN "+modulation.upper()+"\n")
 		if(standard=='11b'):

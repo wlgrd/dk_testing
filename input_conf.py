@@ -7,7 +7,6 @@ tester='IQXEL_280'
 #########################################
 #Hostname/IP-Address of equipment(which ever is reachable)
 #########################################
-# tester_hostname='10.90.48.127'
 tester_hostname='10.90.48.124'
 
 #########################################
@@ -24,19 +23,13 @@ com_port='/dev/ttyACM1'
 #########################################
 #Release Name
 #########################################
-release='BIT_REL_1.0.6_REL_CALDER_5920692_C0'
-release='PR_8493'
+release='NCS2.1.0'
 
 #########################################
 
 #DUT Base Board Number
 #########################################
-board_num='VCU108_3'
-
-#########################################
-#DUT RF Board Number
-#########################################
-rf_num='ES3-2'
+board_num='14'
 
 #########################################
 #DUT Reboot Time
@@ -47,21 +40,6 @@ reboot_time=6
 #########################################
 num_of_pkts_from_vsg=100
 
-#########################################
-#DUT Codescape Debug
-#########################################
-codescape_debug='no'
-
-################################################################
-#####################	SSH ACCESS	#########################
-################################################################
-#Below params are mandatory if execution of DUT is with SSH
-dut_mgmt_ip='10.90.48.182'
-# dut_mgmt_ip='10.90.48.178'
-dut_username='root'
-dut_password='root123'
-dut_wlan_mac='0019f5060220'
-base_addr='0xe1057'
 #########################################
 #Cable Loss of both the cables in the channels where production calibration is performed
 # '24G_BAND':2, #All 2.4G Channels
